@@ -21,14 +21,15 @@ pipeline {
                     // resolve the Sonar Scanner installation path
                     def scannerHome = tool name: 'sonar-scanner-7.2.0', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 
-                    withSonarQubeEnv('sonar-local') {
-                        sh """
-                            ${scannerHome}/bin/sonar-scanner \
-                            -Dsonar.projectKey=business-mgmt-app \
-                            -Dsonar.projectName=business-mgmt-app \
-                            -Dsonar.sources=src \
-                            -Dsonar.java.binaries=target/classes
-                        """
+                        withSonarQubeEnv('sonar-local') {
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=business-mgmt-app \
+                    -Dsonar.projectName=business-mgmt-app \
+                    -Dsonar.sources=src \
+                    -Dsonar.java.binaries=target/classes \
+                    -X
+                """
                     }
                 }
             }
