@@ -21,7 +21,7 @@ pipeline {
                     // resolve the Sonar Scanner installation path
                     def scannerHome = tool name: 'sonar-scanner'
 
-                        withSonarQubeEnv('sonar-local-new') {
+                        withSonarQubeEnv('sonar-local') {
                 sh """
                     ${scannerHome}/bin/sonar-scanner \
                     -Dsonar.projectKey=business-mgmt-app \
