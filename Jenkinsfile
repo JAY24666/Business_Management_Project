@@ -4,7 +4,7 @@ pipeline {
     environment {
         REGISTRY = "docker.io"
         IMAGE_NAME = "jay24666/business-mgmt-app"
-        SONAR_HOST_URL = "http://52.64.33.125:9000"
+        SONAR_HOST_URL = "http://54.252.16.191:9000"
     }
 
     stages {
