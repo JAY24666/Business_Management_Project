@@ -34,13 +34,13 @@ pipeline {
             }
         }
 
-        // stage ("Check Quality Gate") {
-        //     steps {
-        //         timeout(time: 3, unit: 'MINUTES') {
-        //             waitForQualityGate abortPipeline: true
-        //         }
-        //     }
-        // }
+        stage ("Check Quality Gate") {
+            steps {
+                timeout(time: 3, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 
     }
 }
