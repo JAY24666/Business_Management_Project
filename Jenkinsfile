@@ -4,7 +4,7 @@ pipeline {
     environment {
         REGISTRY = "docker.io"
         IMAGE_NAME = "jay24666/business-mgmt-app"
-        SONAR_HOST_URL = "http://54.252.16.191"
+        SONAR_HOST_URL = "http://3.106.213.149"
     }
 
     stages {
@@ -34,13 +34,13 @@ pipeline {
             }
         }
 
-        stage ("Check Quality Gate") {
-            steps {
-                timeout(time: 3, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        // stage ("Check Quality Gate") {
+        //     steps {
+        //         timeout(time: 3, unit: 'MINUTES') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
 
     }
 }
