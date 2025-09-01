@@ -42,5 +42,25 @@ pipeline {
             }
         }
 
+         stage("Upload Artifacts") {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: 'nexus:8081',
+                    groupId: 'com.business',
+                    version: '0.0.1-SNAPSHOT',   // must match POM
+                    repository: 'maven-snapshots',  // snapshot repo
+                    credentialsId: 'jenkins-nexus',
+                    artifacts: [
+                        [artifactId: 'BusinessProject',    // must match POM
+                        classifier: '',
+                        file: 'target/BusinessProject-0.0.1-SNAPSHOT.jar',
+                        type: 'jar']
+                    ]
+                )
+            }
+        }
+
     }
 }
