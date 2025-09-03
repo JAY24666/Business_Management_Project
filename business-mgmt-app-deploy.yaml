@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: business-mgmt-app
-          image: jay24666/business-mgmt-app:latest
+          image: jay24666/business-mgmt-app:22
           imagePullPolicy: Always
           ports:
             - containerPort: 2330
