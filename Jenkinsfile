@@ -10,9 +10,6 @@ pipeline {
     stages {
 
         stage("Build Code") {
-            tools {
-                maven 'maven-3.9.11'
-            }
             steps {
                 sh "mvn clean install -DskipTests"
             }
