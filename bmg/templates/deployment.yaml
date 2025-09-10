@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "bmg.fullname" . }}-business-mgmt-app
+  labels:
+    app: business-mgmt-app
+  {{- include "bmg.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.businessMgmtApp.replicas }}
+  selector:
+    matchLabels:
+      app: business-mgmt-app
+    {{- include "bmg.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: business-mgmt-app
+      {{- include "bmg.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: SPRING_DATASOURCE_URL
+          value: {{ quote .Values.businessMgmtApp.businessMgmtApp.env.springDatasourceUrl
+            }}
+        - name: SPRING_DATASOURCE_USERNAME
+          value: {{ quote .Values.businessMgmtApp.businessMgmtApp.env.springDatasourceUsername
+            }}
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: {{ quote .Values.businessMgmtApp.businessMgmtApp.env.springDatasourcePassword
+            }}
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.businessMgmtApp.businessMgmtApp.image.repository }}:{{ .Values.businessMgmtApp.businessMgmtApp.image.tag
+          | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.businessMgmtApp.businessMgmtApp.imagePullPolicy }}
+        name: business-mgmt-app
+        ports:
+        - containerPort: 2330
+        resources: {}

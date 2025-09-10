@@ -1,0 +1,18 @@
+businessMgmtApp:
+  businessMgmtApp:
+    env:
+      springDatasourcePassword: secret
+      springDatasourceUrl: jdbc:mysql://mysql:3306/businessproject
+      springDatasourceUsername: root
+    image:
+      repository: jay24666/business-mgmt-app
+      tag: "22"
+    imagePullPolicy: Always
+  replicas: 2
+kubernetesClusterDomain: cluster.local
+svc:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 2330
+  type: NodePort

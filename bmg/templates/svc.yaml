@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "bmg.fullname" . }}-svc
+  labels:
+  {{- include "bmg.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.svc.type }}
+  selector:
+    app: business-mgmt-app
+    {{- include "bmg.selectorLabels" . | nindent 4 }}
+  ports:
+  {{- .Values.svc.ports | toYaml | nindent 2 }}
