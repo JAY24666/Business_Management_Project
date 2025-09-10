@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         REGISTRY = "docker.io"
-        IMAGE_NAME = "vsiraparapu/business-mgmt-app"
+        IMAGE_NAME = "jay24666/business-mgmt-app"
         SONAR_HOST_URL = "http://sonarqube.local"
     }
 
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // resolve the Sonar Scanner installation path
-                    def scannerHome = tool name: 'sonar-scanner-7.2.0', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    def scannerHome = tool name: 'sonar-scanner'
 
                     withSonarQubeEnv('sonar-local') {
                         sh """
@@ -55,7 +55,7 @@ pipeline {
                     groupId: 'com.business',
                     version: '0.0.1-SNAPSHOT',   // must match POM
                     repository: 'maven-snapshots',  // snapshot repo
-                    credentialsId: 'nexus-jenkins-creds',
+                    credentialsId: 'jenkins-nexus',
                     artifacts: [
                         [artifactId: 'BusinessProject',    // must match POM
                         classifier: '',
@@ -90,19 +90,19 @@ pipeline {
             }
         }
 
-        stage ("Deploy to cluster dev-kt-k8s") {
-            steps {
-                withKubeConfig(credentialsId: 'kubeconfig-dev-kt-k8s') {
-                    sh "kubectl apply -f k8s/namespace.yaml"
-                    sh "kubectl apply -f k8s/mysql/"
+        // stage ("Deploy to cluster dev-kt-k8s") {
+        //     steps {
+        //         withKubeConfig(credentialsId: 'kubeconfig-dev-kt-k8s') {
+        //             sh "kubectl apply -f k8s/namespace.yaml"
+        //             sh "kubectl apply -f k8s/mysql/"
 
-                    sh """
-                        sed -i 's#docker.io/vsiraparapu/business-mgmt-app:[0-9]\\+#docker.io/vsiraparapu/business-mgmt-app:${BUILD_NUMBER}#' k8s/app/deployment.yaml
-                        kubectl apply -f k8s/app/
-                    """
-                }
-            }
-        }
+        //             sh """
+        //                 sed -i 's#docker.io/vsiraparapu/business-mgmt-app:[0-9]\\+#docker.io/vsiraparapu/business-mgmt-app:${BUILD_NUMBER}#' k8s/app/deployment.yaml
+        //                 kubectl apply -f k8s/app/
+        //             """
+        //         }
+        //     }
+        // }
     }
 }
 
