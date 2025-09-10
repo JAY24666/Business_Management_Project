@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: business-app
-          image: docker.io/vsiraparapu/business-mgmt-app:27   # replace with your image
+          image: docker.io/jay24666/business-mgmt-app:8   # replace with your image
           ports:
             - containerPort: 2330
           env:
